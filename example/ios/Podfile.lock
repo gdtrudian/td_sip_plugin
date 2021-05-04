@@ -1,0 +1,42 @@
+PODS:
+  - Flutter (1.0.0)
+  - linphone-sdk (4.3.1):
+    - linphone-sdk/basic-frameworks (= 4.3.1)
+  - linphone-sdk/basic-frameworks (4.3.1)
+  - "permission_handler (5.1.0+2)":
+    - Flutter
+  - td_sip_plugin (0.0.1):
+    - Flutter
+    - TDSip (= 1.0.1)
+  - TDSip (1.0.1):
+    - linphone-sdk (= 4.3.1)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - td_sip_plugin (from `.symlinks/plugins/td_sip_plugin/ios`)
+
+SPEC REPOS:
+  https://git.trudian.com/Trudian/Specs.git:
+    - TDSip
+  https://gitlab.linphone.org/BC/public/podspec.git:
+    - linphone-sdk
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+  td_sip_plugin:
+    :path: ".symlinks/plugins/td_sip_plugin/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  linphone-sdk: 044f9b75a34b1a4cc31fc7c73933f07eb102f8a7
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
+  td_sip_plugin: 4d3d42cf3d2e03c1057c95b6e646ddd12c4300d1
+  TDSip: c9142869bd2598e91559acc3fde4ce0f31ec85d4
+
+PODFILE CHECKSUM: fa1f080986f78e6d5da92ded9a29943130bb9edb
+
+COCOAPODS: 1.9.1

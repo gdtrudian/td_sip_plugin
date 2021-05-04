@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.mz.td_sip_plugin">
+
+    <application>
+        <service android:name=".sip_tru.SipTruMiniManager" />
+    </application>
+</manifest>
