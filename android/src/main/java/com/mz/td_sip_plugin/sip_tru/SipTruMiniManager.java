@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.os.IBinder;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -321,6 +322,7 @@ public class SipTruMiniManager extends Service implements CoreListener {
     @Override
     public void onCallStateChanged(Core core, Call call, Call.State state, String s) {
         String stateStr = state.toString();
+        Log.d("onCallStateChanged",stateStr);
         if (TextUtils.isEmpty(mCurrentAddress)) {
             mCurrentAddress = call.getRemoteAddressAsString();
         }
@@ -337,7 +339,7 @@ public class SipTruMiniManager extends Service implements CoreListener {
             if (mSipPlugin != null) {
                 mSipPlugin.callStatusUpdate("incoming", list[0]);
             }
-        } else if (state == Call.State.OutgoingRinging) {
+        } else if (state == Call.State.OutgoingProgress) {
             call.enableCamera(false);
             if (mSipPlugin != null) {
                 mSipPlugin.callStatusUpdate("outgoing", null);
