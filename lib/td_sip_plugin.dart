@@ -29,6 +29,7 @@ class TdSipPlugin {
 
   /// 注册Sip监听
   /// eventName:
+  /// "loginStatus">登录状态
   /// "callBusy">呼叫忙碌
   /// "didCallOut">成功呼出
   /// "didCallEnd">呼叫结束
@@ -47,6 +48,7 @@ class TdSipPlugin {
   }
 
   /// 注册DisplayView监听，仅Android有效
+  /// 仅供TDDisplayView使用，外部不需调用该方法
   static addDisplayViewReceiver({@required EventHandler onEvent}) {
     _displayViewMethodChannel.setMethodCallHandler((call) async {
       switch (call.method) {
@@ -137,6 +139,7 @@ class TdSipPlugin {
   }
 
   /// 设置背景图片
+  /// 仅供TDDisplayView使用，外部不需调用该方法
   static setPlaceholder(String placeholder) {
     _displayViewMethodChannel
         .invokeMethod("setPlaceholder", {"placeholder": placeholder});

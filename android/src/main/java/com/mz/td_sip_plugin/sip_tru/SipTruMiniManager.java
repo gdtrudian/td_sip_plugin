@@ -335,9 +335,8 @@ public class SipTruMiniManager extends Service implements CoreListener {
                 mSiptruCore.terminateAllCalls();
                 return;
             }
-            String[] list = call.getRemoteAddressAsString().split("@");
             if (mSipPlugin != null) {
-                mSipPlugin.callStatusUpdate("incoming", list[0]);
+                mSipPlugin.callStatusUpdate("incoming", call.getRemoteAddress().getUsername());
             }
         } else if (state == Call.State.OutgoingProgress) {
             call.enableCamera(false);
@@ -360,15 +359,7 @@ public class SipTruMiniManager extends Service implements CoreListener {
             if (mSipPlugin != null) {
                 mSipPlugin.callStatusUpdate("busy", null);
             }
-        } else if (state == Call.State.End) {
-            if (!call.getRemoteAddressAsString().equalsIgnoreCase(mCurrentAddress)) {
-                return;
-            }
-            mCurrentAddress = "";
-            if (mSipPlugin != null) {
-                mSipPlugin.callStatusUpdate("End", null);
-            }
-        } else if (state == Call.State.Error) {
+        } else if (state == Call.State.Released) {
             if (!call.getRemoteAddressAsString().equalsIgnoreCase(mCurrentAddress)) {
                 return;
             }
