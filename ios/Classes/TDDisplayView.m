@@ -28,18 +28,6 @@
     self = [super init];
     if (self) {
         self.frame = frame;
-        
-        NSString *channelName = @"TDDisplayView";
-        FlutterMethodChannel *methodChannel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:messenger];
-        [methodChannel setMethodCallHandler:^(FlutterMethodCall * _Nonnull call, FlutterResult  _Nonnull result) {
-            if ([[call method] isEqualToString:@"setPlaceholder"]) {
-                NSString *placeholder = call.arguments[@"placeholder"];
-                NSURL *url = [NSURL URLWithString:placeholder];
-                NSData *imageData = [NSData dataWithContentsOfURL:url];
-                self.displayView.image = [UIImage imageWithData:imageData];
-            }
-        }];
-        [methodChannel invokeMethod:@"setPlaceholder" arguments:nil];
     }
     return self;
 }

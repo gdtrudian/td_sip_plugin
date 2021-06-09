@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -17,46 +15,85 @@ enum TDSipLoginStatus {
   TDSipLoginStatusFailed
 }
 
-typedef void EventHandler(Map<String, dynamic> event);
+abstract class TdSipObserver {
+  /// 登录状态更新
+  void tdSipLoginStatus(TDSipLoginStatus status) {}
+
+  /// 呼叫忙碌
+  void tdSipCallBusy() {}
+
+  /// 成功呼出
+  void tdSipDidCallOut() {}
+
+  /// 呼叫或通话结束
+  void tdSipDidCallEnd() {}
+
+  /// 收到视频音频流
+  void tdSipStreamsDidBeginRunning() {}
+
+  /// 收到呼叫（"sipID">呼叫方的sipID）
+  void tdSipDidReceiveCallForID(String sipID) {}
+}
 
 class TdSipPlugin {
   static const MethodChannel _methodChannel =
       const MethodChannel('td_sip_plugin');
-  static const MethodChannel _displayViewMethodChannel =
-      const MethodChannel('TDDisplayView');
   static const EventChannel _eventChannel =
       const EventChannel("td_sip_plugin_stream");
+  static List<TdSipObserver> _observerList = [];
 
-  /// 注册Sip监听
-  /// eventName:
-  /// "loginStatus">登录状态
-  /// "callBusy">呼叫忙碌
-  /// "didCallOut">成功呼出
-  /// "didCallEnd">呼叫结束
-  /// "streamsDidBeginRunning">收到视频音频流
-  /// "didReceiveCallForID">收到呼叫 （"sipID">呼叫方的sipID）
-  static addSipReceiver({@required EventHandler onEvent}) {
+  static initial() {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      Future.delayed(Duration(seconds: 2), () {
+        _methodChannel.invokeMethod("initial");
+      });
+    }
     _eventChannel.receiveBroadcastStream().listen((event) {
       Map map = new Map<String, dynamic>.from(event);
-      if (map["eventName"] == "streamsDidBeginRunning") {
-        _displayViewMethodChannel.invokeMethod("hideDisplayView");
-      } else if (map["eventName"] == "didCallEnd") {
-        _displayViewMethodChannel.invokeMethod("showDisplayView");
-      }
-      onEvent(map);
-    });
-  }
-
-  /// 注册DisplayView监听，仅Android有效
-  /// 仅供TDDisplayView使用，外部不需调用该方法
-  static addDisplayViewReceiver({@required EventHandler onEvent}) {
-    _displayViewMethodChannel.setMethodCallHandler((call) async {
-      switch (call.method) {
-        case "setPlaceholder":
-          onEvent({"eventName": "setPlaceholder"});
+      switch (map["eventName"]) {
+        case "loginStatus":
+          _observerList.forEach((TdSipObserver observer) {
+            observer
+                .tdSipLoginStatus(TDSipLoginStatus.values[map["loginStatus"]]);
+          });
+          break;
+        case "didReceiveCallForID":
+          _observerList.forEach((TdSipObserver observer) {
+            observer.tdSipDidReceiveCallForID(map["sipID"]);
+          });
+          break;
+        case "didCallOut":
+          _observerList.forEach((TdSipObserver observer) {
+            observer.tdSipDidCallOut();
+          });
+          break;
+        case "didCallEnd":
+          _observerList.forEach((TdSipObserver observer) {
+            observer.tdSipDidCallEnd();
+          });
+          break;
+        case "callBusy":
+          _observerList.forEach((TdSipObserver observer) {
+            observer.tdSipCallBusy();
+          });
+          break;
+        case "streamsDidBeginRunning":
+          _observerList.forEach((TdSipObserver observer) {
+            observer.tdSipStreamsDidBeginRunning();
+          });
           break;
       }
     });
+  }
+
+  /// 注册Sip监听
+  static addSipObserver(TdSipObserver observer) {
+    _observerList.add(observer);
+  }
+
+  /// 移除监听
+  static removeSipObserver(TdSipObserver observer) {
+    _observerList.remove(observer);
   }
 
   /// 登录Sip账号
@@ -138,10 +175,10 @@ class TdSipPlugin {
     _methodChannel.invokeMethod("micON");
   }
 
-  /// 设置背景图片
-  /// 仅供TDDisplayView使用，外部不需调用该方法
-  static setPlaceholder(String placeholder) {
-    _displayViewMethodChannel
-        .invokeMethod("setPlaceholder", {"placeholder": placeholder});
+  /// 跳转息屏显示呼叫页面，仅Android可用
+  static showSipPage() {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      _methodChannel.invokeMethod("showSipPage");
+    }
   }
 }

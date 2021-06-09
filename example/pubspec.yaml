@@ -25,6 +25,8 @@ dependencies:
   cupertino_icons: ^1.0.0
   #权限管理
   permission_handler: ^7.1.0
+  #安卓返回
+  mz_back_plugin: ^0.0.2
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 package com.mz.td_sip_plugin;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 
@@ -17,7 +19,11 @@ import org.linphone.core.RegistrationState;
 
 import java.util.HashMap;
 
+import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.embedding.engine.plugins.util.GeneratedPluginRegister;
 import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -28,11 +34,12 @@ import io.flutter.plugin.common.MethodChannel.Result;
 /**
  * TdSipPlugin
  */
-public class TdSipPlugin extends BroadcastReceiver implements FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler, SipTruMiniManagerListener {
+public class TdSipPlugin extends BroadcastReceiver implements FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler, SipTruMiniManagerListener, ActivityAware {
 
     private MethodChannel methodChannel;
     private EventChannel eventChannel;
     private EventChannel.EventSink mEvents;
+    private Activity mActivity;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
@@ -44,7 +51,6 @@ public class TdSipPlugin extends BroadcastReceiver implements FlutterPlugin, Met
 
         flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("TDDisplayView", new TdDisplayViewFactory(flutterPluginBinding.getBinaryMessenger()));
 
-//    Application application = (Application) Class.forName("android.app.ActivityThread").getMethod("currentApplication").invoke(null, (Object[]) null);
         Context application = flutterPluginBinding.getApplicationContext();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.mz.td_sip_plugin_init_success");
@@ -56,7 +62,11 @@ public class TdSipPlugin extends BroadcastReceiver implements FlutterPlugin, Met
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-        if (call.method.equals("login")) {
+        if (call.method.equals("initial")) {
+            if (SipTruMiniManager.isReady()) {
+                SipTruMiniManager.getInstance().initial();
+            }
+        } else if (call.method.equals("login")) {
             HashMap<String, Object> map = (HashMap) call.arguments;
             String sipID = (String) map.get("sipID");
             String sipPassword = (String) map.get("sipPassword");
@@ -125,6 +135,12 @@ public class TdSipPlugin extends BroadcastReceiver implements FlutterPlugin, Met
             if (SipTruMiniManager.isReady()) {
                 SipTruMiniManager.getInstance().micON();
             }
+        } else if (call.method.equals("showSipPage")) {
+            if (mActivity != null) {
+                Intent intent = FlutterActivity.withNewEngine().initialRoute("/td_sip_page").build(mActivity.getApplicationContext());
+                intent.putExtra("isSipActivity", true);
+                mActivity.startActivity(intent);
+            }
         } else {
             result.notImplemented();
         }
@@ -159,7 +175,7 @@ public class TdSipPlugin extends BroadcastReceiver implements FlutterPlugin, Met
     }
 
     @Override
-    public void callStatusUpdate(String status, String sipID) {
+    public void callStatusUpdate(String status, final String sipID) {
         if (mEvents != null) {
             final HashMap<String, String> map = new HashMap<>();
             switch (status) {
@@ -206,4 +222,32 @@ public class TdSipPlugin extends BroadcastReceiver implements FlutterPlugin, Met
             SipTruMiniManager.getInstance().setProtocol(this);
         }
     }
+
+    @Override
+    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        mActivity = binding.getActivity();
+        boolean isSipActivity = mActivity.getIntent().getBooleanExtra("isSipActivity", false);
+        if (isSipActivity) {
+            mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED //锁屏显示
+                    | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD //解锁
+                    | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON //保持屏幕不息屏
+                    | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        }
+    }
+
+    @Override
+    public void onDetachedFromActivityForConfigChanges() {
+
+    }
+
+    @Override
+    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+
+    }
+
+    @Override
+    public void onDetachedFromActivity() {
+
+    }
+
 }

@@ -1,33 +1,22 @@
 package com.mz.td_sip_plugin;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-
-import androidx.annotation.NonNull;
 
 import com.mz.td_sip_plugin.sip_tru.SipTruMiniManager;
 
 import org.linphone.mediastream.video.AndroidVideoWindowImpl;
 import org.linphone.mediastream.video.display.GL2JNIView;
 
-import java.util.HashMap;
-
 import io.flutter.plugin.common.BinaryMessenger;
-import io.flutter.plugin.common.MethodCall;
-import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.platform.PlatformView;
 
-public class TdDisplayView implements PlatformView, MethodChannel.MethodCallHandler {
+public class TdDisplayView implements PlatformView {
 
     private final FrameLayout mFrameLayout;
-    private final ImageView mImageView;
     private final GL2JNIView mRenderingView;
     private AndroidVideoWindowImpl mAndroidVideoWindow;
 
@@ -45,19 +34,6 @@ public class TdDisplayView implements PlatformView, MethodChannel.MethodCallHand
                 ViewGroup.LayoutParams.MATCH_PARENT
         ));
         mFrameLayout.addView(mRenderingView);
-
-        mImageView = new ImageView(context);
-        mImageView.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        ));
-        mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        mImageView.setVisibility(View.INVISIBLE);
-        mFrameLayout.addView(mImageView);
-
-        MethodChannel methodChannel = new MethodChannel(messenger, "TDDisplayView");
-        methodChannel.setMethodCallHandler(this);
-        methodChannel.invokeMethod("setPlaceholder", null);
 
         mAndroidVideoWindow = new AndroidVideoWindowImpl(mRenderingView, null, new AndroidVideoWindowImpl.VideoWindowListener() {
             @Override
@@ -91,22 +67,6 @@ public class TdDisplayView implements PlatformView, MethodChannel.MethodCallHand
         if (mAndroidVideoWindow != null) {
             mAndroidVideoWindow.release();
             mAndroidVideoWindow = null;
-        }
-    }
-
-    @Override
-    public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
-        if (call.method.equals("setPlaceholder")) {
-            mImageView.setVisibility(View.VISIBLE);
-            HashMap<String, String> map = (HashMap) call.arguments;
-            String placeholder = map.get("placeholder");
-            byte[] decodeString = Base64.decode(placeholder, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(decodeString,0, decodeString.length);
-            mImageView.setImageBitmap(bitmap);
-        } else if (call.method.equals("hideDisplayView")) {
-            mImageView.setVisibility(View.INVISIBLE);
-        } else if (call.method.equals("showDisplayView")) {
-            mImageView.setVisibility(View.VISIBLE);
         }
     }
 }

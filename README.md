@@ -10,6 +10,7 @@ To use the plugin ,add `td_sip_plugin` as a dependency in your pubspec.yaml
 use it in Android, you have to add this permission in your AndroidManifest.xml:
 ```
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -28,26 +29,15 @@ Privacy - Microphone Usage Description
     Container(
       width: 200,
       height: 120,
-      child: TDDisplayView(
-        placeholder: "images/video.png",
-      ),
+      child: TDDisplayView(),
     )
     
-    // sip observe（sip状态监听）
-    TdSipPlugin.addSipReceiver(onEvent: (event) {
-      print(event.toString());
-      if (event["eventName"] == "loginStatus") {
-        setState(() {
-          _loginStatus =
-              "${TDSipLoginStatus.values[event["loginStatus"]]}";
-        });
-      } else {
-        setState(() {
-          _callStatus = event["eventName"];
-        });
-      }
-    });
-    
+    // 添加sip监听
+    TdSipPlugin.addSipObserver(this);
+
+    // 移除sip监听
+    TdSipPlugin.removeSipObserver(this);
+
     //sip login(登录sip账号)
     TdSipPlugin.login(
         sipID: "1100000004",

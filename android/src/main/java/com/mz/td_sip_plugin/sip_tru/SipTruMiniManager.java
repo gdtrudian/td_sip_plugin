@@ -81,7 +81,7 @@ public class SipTruMiniManager extends Service implements CoreListener {
         super.onCreate();
 
         lcFactory = Factory.instance();
-        lcFactory.setDebugMode(true, "TDSip>>");
+        lcFactory.setDebugMode(false, "TDSip>>");
         mContext = this;
 
         try {
@@ -90,7 +90,6 @@ public class SipTruMiniManager extends Service implements CoreListener {
             SipTruMiniUtils.copyFromPackage(mContext, R.raw.linphonerc_factory, new File(basePath + "/linphonerc").getName());
             SipTruMiniUtils.copyIfNotExist(mContext, R.raw.lpconfig, basePath + "/lpconfig.xsd");
             SipTruMiniUtils.copyIfNotExist(mContext, R.raw.rootca, basePath + "/rootca.pem");
-            mSiptruCore = lcFactory.createCore(basePath + "/.linphonerc", basePath + "/linphonerc", mContext);
             mSiptruCore = lcFactory.createCore(basePath + "/.linphonerc", basePath + "/linphonerc", mContext);
             mSiptruCore.addListener(this);
             String[] dnsServer = new String[]{"8.8.8.8"};
@@ -135,6 +134,22 @@ public class SipTruMiniManager extends Service implements CoreListener {
 
     public void setProtocol(TdSipPlugin sipPlugin) {
         mSipPlugin = sipPlugin;
+    }
+
+    public void initial() {
+        if (mSiptruCore == null) {
+            return;
+        }
+
+        // 处理app重启自动注册的问题
+        ProxyConfig config = mSiptruCore.getDefaultProxyConfig();
+        if (config != null) {
+            mSiptruCore.addProxyConfig(config);
+            mSiptruCore.addAuthInfo(config.findAuthInfo());
+        }
+
+        // 不录入视频
+        mSiptruCore.enableVideoCapture(false);
     }
 
     /**

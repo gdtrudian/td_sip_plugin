@@ -34,4 +34,6 @@ android {
 
 dependencies {
     implementation files('libs/td-sip-1.1.0.aar')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }
