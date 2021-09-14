@@ -1,3 +1,6 @@
+## 0.0.5
+* add null safety
+
 ## 0.0.4
 * add the Full screen display of Android when the app is in background
 * remove the placeholder of TDDisplayView
