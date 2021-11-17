@@ -9,14 +9,14 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 A Flutter plugin for sip belong Trudian.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'http://open.trudian.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Jeason' => '1691665955@qq.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'TDSip','1.0.1'
+  s.dependency 'TDSip','1.0.2'
   s.platform = :ios, '9.0'
 
   s.pod_target_xcconfig = { 'VALID_ARCHS' => 'x86_64 armv7 arm64' }

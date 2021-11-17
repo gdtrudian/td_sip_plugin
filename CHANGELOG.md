@@ -1,3 +1,6 @@
+## 0.0.6
+* fix the error of Repository not found
+
 ## 0.0.5
 * add null safety
 
