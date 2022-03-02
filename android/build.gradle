@@ -17,7 +17,7 @@ rootProject.allprojects {
         google()
         jcenter()
         flatDir {
-            dirs project(':td_sip_plugin:').file('libs')
+            dirs project(':td_sip_plugin').file('libs')
         }
     }
 }
