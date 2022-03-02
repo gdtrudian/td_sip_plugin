@@ -1,3 +1,7 @@
+## 0.0.7
+* update the example project sip login account
+* fix some issues
+
 ## 0.0.6
 * fix the error of Repository not found
 

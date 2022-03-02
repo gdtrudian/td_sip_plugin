@@ -16,6 +16,9 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
+        flatDir {
+            dirs project(':td_sip_plugin:').file('libs')
+        }
     }
 }
 
@@ -33,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation files('libs/td-sip-1.1.0.aar')
+    implementation(name: 'td-sip-1.1.0', ext: 'aar')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }

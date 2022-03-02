@@ -24,9 +24,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   #权限管理
-  permission_handler: ^7.1.0
+  permission_handler: ^9.1.0
   #安卓返回
-  mz_back_plugin: ^0.0.2
+  mz_back_plugin: ^0.0.3
 
 dev_dependencies:
   flutter_test:

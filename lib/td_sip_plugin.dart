@@ -108,10 +108,10 @@ class TdSipPlugin {
   /// turnUser      turn账号
   /// turnPassword  turn密码
   static login({
-    @required String sipID,
-    @required String sipPassword,
-    @required String sipDomain,
-    @required String sipPort,
+    required String sipID,
+    required String sipPassword,
+    required String sipDomain,
+    required String sipPort,
     String sipTransport = "tcp",
     bool iceEnable = false,
     bool turnEnable = false,

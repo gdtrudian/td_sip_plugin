@@ -12,6 +12,9 @@
         </activity>
 
         <service android:name=".sip_tru.SipTruMiniManager" />
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
     </application>
 
 </manifest>

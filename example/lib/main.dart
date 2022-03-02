@@ -146,8 +146,8 @@ class _HomePageState extends State<HomePage>
                 child: Text("登录"),
                 onPressed: () {
                   TdSipPlugin.login(
-                      sipID: "1100000004",
-                      sipPassword: "2ebdeb8b65d320b2",
+                      sipID: "110000004",
+                      sipPassword: "285f758dff64a1d8",
                       sipDomain: "47.106.186.8",
                       sipPort: "8060");
                 },
