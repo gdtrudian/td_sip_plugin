@@ -41,7 +41,7 @@ Privacy - Microphone Usage Description
     //sip login(登录sip账号)
     TdSipPlugin.login(
         sipID: "1100000004",
-        sipPassword: "2ebdeb8b65d320b2",
+        sipPassword: "285f758dff64a1d8",
         sipDomain: "47.106.186.8",
         sipPort: "8060",
         turnEnable: false,
