@@ -16,7 +16,7 @@ A Flutter plugin for sip belong Trudian.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'TDSip','1.0.2'
+  s.dependency 'TDSip','1.0.3'
   s.platform = :ios, '9.0'
 
   s.pod_target_xcconfig = { 'VALID_ARCHS' => 'x86_64 armv7 arm64' }

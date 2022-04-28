@@ -1,6 +1,6 @@
 name: td_sip_plugin
 description: A Flutter plugin for sip belong Trudian (Use with our compnay physical equipment).
-version: 0.0.7
+version: 0.0.8
 homepage: https://git.trudian.com/Trudian/td_sip_plugin.git
 
 environment:

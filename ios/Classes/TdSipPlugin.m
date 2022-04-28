@@ -52,8 +52,10 @@
       [TDSipManager answer];
   } else if ([@"hangup" isEqualToString:call.method]) {
       [TDSipManager hangup];
-  } else if ([@"switchSoundDevice" isEqualToString:call.method]) {
-      [TDSipManager switchSoundDevice];
+  } else if ([@"switchToLoudspeaker" isEqualToString:call.method]) {
+      [TDSipManager switchToLoudspeaker];
+  } else if ([@"switchToEarphone" isEqualToString:call.method]) {
+      [TDSipManager switchToEarphone];
   } else if ([@"micOFF" isEqualToString:call.method]) {
       [TDSipManager micOFF];
   } else if ([@"micON" isEqualToString:call.method]) {

@@ -123,9 +123,13 @@ public class TdSipPlugin extends BroadcastReceiver implements FlutterPlugin, Met
             if (SipTruMiniManager.isReady()) {
                 SipTruMiniManager.getInstance().hangUp();
             }
-        } else if (call.method.equals("switchSoundDevice")) {
+        } else if (call.method.equals("switchToLoudspeaker")) {
             if (SipTruMiniManager.isReady()) {
-                SipTruMiniManager.getInstance().openAmplification(!SipTruMiniManager.getInstance().isOpenAmplification);
+                SipTruMiniManager.getInstance().openAmplification(true);
+            }
+        } else if (call.method.equals("switchToEarphone")) {
+            if (SipTruMiniManager.isReady()) {
+                SipTruMiniManager.getInstance().openAmplification(false);
             }
         } else if (call.method.equals("micOFF")) {
             if (SipTruMiniManager.isReady()) {

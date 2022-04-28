@@ -160,9 +160,14 @@ class TdSipPlugin {
     _methodChannel.invokeMethod("hangup");
   }
 
-  /// 切换音频播放设备（默认为扬声器）
-  static switchSoundDevice() {
-    _methodChannel.invokeMethod("switchSoundDevice");
+  /// 切换到免提（扬声器）
+  static switchToLoudspeaker() {
+    _methodChannel.invokeMethod("switchToLoudspeaker");
+  }
+
+  /// 切换到听筒
+  static switchToEarphone() {
+    _methodChannel.invokeMethod("switchToEarphone");
   }
 
   /// 关闭麦克风

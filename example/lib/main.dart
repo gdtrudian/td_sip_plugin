@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage>
   void tdSipDidReceiveCallForID(String sipID) {
     super.tdSipDidReceiveCallForID(sipID);
 
-    /// 设置呼叫页面息屏显示后，只有iOS需要做页面跳转处理，Android已在原生底层处理，只需要实现路由为的页面即可
+    /// 设置呼叫页面息屏显示后，只有iOS需要做页面跳转处理，Android已在原生底层处理，只需要实现路由为"/td_sip_page"的页面即可
     /// ⚠️ 路由"/td_sip_page"为固定的呼叫页面路由
     if (defaultTargetPlatform == TargetPlatform.android && _isPaused) {
       /// 这里可以本地存储相关呼叫信息，然后在SipPage里面去获取

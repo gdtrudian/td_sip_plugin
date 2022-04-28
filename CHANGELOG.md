@@ -1,3 +1,7 @@
+## 0.0.8
+* add the method "switchToLoudspeaker" & "switchToEarphone"
+* remove the method "switchSoundDevice"
+
 ## 0.0.7
 * update the example project sip login account
 * fix some issues
