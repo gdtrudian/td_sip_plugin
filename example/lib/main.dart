@@ -117,13 +117,15 @@ class _HomePageState extends State<HomePage>
     Permission permission = Permission.microphone;
     PermissionStatus status = await permission.status;
     if (status.isGranted) {
-      TdSipPlugin.call("1907556514130605");
+      // 1907556514130605
+      // 100000004
+      TdSipPlugin.call("110000004");
     } else if (status.isPermanentlyDenied) {
       ///用户点击了 拒绝且不再提示
     } else {
       PermissionStatus newStatus = await permission.request();
       if (newStatus.isGranted) {
-        TdSipPlugin.call("1907556514130605");
+        TdSipPlugin.call("110000004");
       }
     }
   }
@@ -145,9 +147,14 @@ class _HomePageState extends State<HomePage>
               ElevatedButton(
                 child: Text("登录"),
                 onPressed: () {
+                  // TdSipPlugin.login(
+                  //     sipID: "110000004",
+                  //     sipPassword: "285f758dff64a1d8",
+                  //     sipDomain: "47.106.186.8",
+                  //     sipPort: "8060");
                   TdSipPlugin.login(
-                      sipID: "110000004",
-                      sipPassword: "285f758dff64a1d8",
+                      sipID: "100000004",
+                      sipPassword: "2e30ec7daf9e99a1",
                       sipDomain: "47.106.186.8",
                       sipPort: "8060");
                 },

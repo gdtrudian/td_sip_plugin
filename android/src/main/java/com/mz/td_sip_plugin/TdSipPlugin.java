@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -140,9 +141,11 @@ public class TdSipPlugin extends BroadcastReceiver implements FlutterPlugin, Met
                 SipTruMiniManager.getInstance().micON();
             }
         } else if (call.method.equals("showSipPage")) {
+
             if (mActivity != null) {
                 Intent intent = FlutterActivity.withNewEngine().initialRoute("/td_sip_page").build(mActivity.getApplicationContext());
                 intent.putExtra("isSipActivity", true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
                 mActivity.startActivity(intent);
             }
         } else {
