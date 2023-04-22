@@ -96,6 +96,11 @@ class _HomePageState extends State<HomePage>
 
     /// 设置呼叫页面息屏显示后，只有iOS需要做页面跳转处理，Android已在原生底层处理，只需要实现路由为"/td_sip_page"的页面即可
     /// ⚠️ 路由"/td_sip_page"为固定的呼叫页面路由
+    /// 需要应用开启相关权限
+    /// 1 显示在其他应用上层
+    /// 2 后台弹框
+    /// 3 悬浮窗
+    /// 4 启动管理允许自启动和后台活动（电池）
     if (defaultTargetPlatform == TargetPlatform.android && _isPaused) {
       /// 这里可以本地存储相关呼叫信息，然后在SipPage里面去获取
       /// 比如shared_preferences
@@ -116,16 +121,19 @@ class _HomePageState extends State<HomePage>
   void _checkPermission() async {
     Permission permission = Permission.microphone;
     PermissionStatus status = await permission.status;
+    print(status.isGranted);
     if (status.isGranted) {
-      // 1907556514130605
+      // 2107556514130605
       // 100000004
-      TdSipPlugin.call("110000004");
+      // 110000004
+      TdSipPlugin.call("2107556514130605");
     } else if (status.isPermanentlyDenied) {
       ///用户点击了 拒绝且不再提示
     } else {
       PermissionStatus newStatus = await permission.request();
+      print(newStatus.isGranted);
       if (newStatus.isGranted) {
-        TdSipPlugin.call("110000004");
+        TdSipPlugin.call("2107556514130605");
       }
     }
   }
@@ -147,16 +155,23 @@ class _HomePageState extends State<HomePage>
               ElevatedButton(
                 child: Text("登录"),
                 onPressed: () {
-                  // TdSipPlugin.login(
-                  //     sipID: "110000004",
-                  //     sipPassword: "285f758dff64a1d8",
-                  //     sipDomain: "47.106.186.8",
-                  //     sipPort: "8060");
                   TdSipPlugin.login(
-                      sipID: "100000004",
-                      sipPassword: "2e30ec7daf9e99a1",
+                      sipID: "110000004",
+                      sipPassword: "285f758dff64a1d8",
                       sipDomain: "47.106.186.8",
-                      sipPort: "8060");
+                      sipPort: "8060",
+                      turnEnable: false,
+                      turnServer: "",
+                      turnUser: "",
+                      turnPassword: "",
+                      iceEnable: false
+                  );
+                  // TdSipPlugin.login(
+                  //     sipID: "100000004",
+                  //     sipPassword: "2e30ec7daf9e99a1",
+                  //     sipDomain: "47.106.186.8",
+                  //     sipPort: "8060"
+                  // );
                 },
               ),
               ElevatedButton(

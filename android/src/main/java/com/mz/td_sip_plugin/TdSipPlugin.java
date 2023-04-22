@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.PowerManager;
-import android.util.Log;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -24,7 +22,6 @@ import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
-import io.flutter.embedding.engine.plugins.util.GeneratedPluginRegister;
 import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -141,7 +138,6 @@ public class TdSipPlugin extends BroadcastReceiver implements FlutterPlugin, Met
                 SipTruMiniManager.getInstance().micON();
             }
         } else if (call.method.equals("showSipPage")) {
-
             if (mActivity != null) {
                 Intent intent = FlutterActivity.withNewEngine().initialRoute("/td_sip_page").build(mActivity.getApplicationContext());
                 intent.putExtra("isSipActivity", true);
@@ -258,3 +254,4 @@ public class TdSipPlugin extends BroadcastReceiver implements FlutterPlugin, Met
     }
 
 }
+

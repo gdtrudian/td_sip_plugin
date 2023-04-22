@@ -9,8 +9,8 @@ PODS:
     - Flutter
   - td_sip_plugin (0.0.1):
     - Flutter
-    - TDSip (= 1.0.3)
-  - TDSip (1.0.3):
+    - TDSip (= 1.0.5)
+  - TDSip (1.0.5):
     - linphone-sdk (= 4.3.1)
 
 DEPENDENCIES:
@@ -20,7 +20,7 @@ DEPENDENCIES:
   - td_sip_plugin (from `.symlinks/plugins/td_sip_plugin/ios`)
 
 SPEC REPOS:
-  https://git.trudian.com/Trudian/Specs.git:
+  https://github.com/gdtrudian/Specs.git:
     - TDSip
   https://gitlab.linphone.org/BC/public/podspec.git:
     - linphone-sdk
@@ -36,13 +36,13 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/td_sip_plugin/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   linphone-sdk: 044f9b75a34b1a4cc31fc7c73933f07eb102f8a7
   mz_back_plugin: 96b4b5d4286e3cc276d2ac1f3e1771a36a84bf5c
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
-  td_sip_plugin: 3bf72033ada48d6dda977950938db4a4f7fb6b93
-  TDSip: 8777c349df0a07d1317d26aa52d058b77c62b656
+  td_sip_plugin: be22d744a33a574718c4a25a73cba3c4de57ba76
+  TDSip: ae36154021b4a4e886768107fe9190a32e8be6a8
 
-PODFILE CHECKSUM: fa1f080986f78e6d5da92ded9a29943130bb9edb
+PODFILE CHECKSUM: 24450134fb7311de0e322f7eb8c6478ad9751be9
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

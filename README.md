@@ -82,5 +82,5 @@ Privacy - Microphone Usage Description
 
 Please see the example of this plugin for a full example
 
-[See the plugin in github](https://git.trudian.com/Trudian/td_sip_plugin.git)
+[See the plugin in github](https://github.com/gdtrudian/td_sip_plugin.git)
 

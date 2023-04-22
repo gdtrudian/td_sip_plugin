@@ -1,3 +1,6 @@
+## 0.0.9
+* update the plugin git path
+
 ## 0.0.8
 * add the method "switchToLoudspeaker" & "switchToEarphone"
 * remove the method "switchSoundDevice"
